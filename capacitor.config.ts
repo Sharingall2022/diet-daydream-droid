@@ -2,7 +2,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.53c05a0b5a0847c8afa61f87a64b53d2',
+  appId: 'com.dietapp.daydream',
   appName: 'La Mia Dieta',
   webDir: 'dist',
   server: {
