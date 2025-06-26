@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Calendar, ShoppingCart, ChefHat, List, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -138,22 +137,26 @@ const DietApp = () => {
 
       <div className="p-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-6 bg-white shadow-md">
-            <TabsTrigger value="today" className="flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
-              Oggi
+          <TabsList className="grid w-full grid-cols-4 mb-6 bg-white shadow-md h-auto">
+            <TabsTrigger value="today" className="flex flex-col items-center gap-1 p-2 text-xs sm:flex-row sm:gap-2 sm:text-sm">
+              <Calendar className="w-4 h-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Oggi</span>
+              <span className="sm:hidden">Oggi</span>
             </TabsTrigger>
-            <TabsTrigger value="weekly-shopping" className="flex items-center gap-2">
-              <ShoppingCart className="w-4 h-4" />
-              Settimanale
+            <TabsTrigger value="weekly-shopping" className="flex flex-col items-center gap-1 p-2 text-xs sm:flex-row sm:gap-2 sm:text-sm">
+              <ShoppingCart className="w-4 h-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Settimanale</span>
+              <span className="sm:hidden">Sett.</span>
             </TabsTrigger>
-            <TabsTrigger value="daily-shopping" className="flex items-center gap-2">
-              <List className="w-4 h-4" />
-              Giornaliera
+            <TabsTrigger value="daily-shopping" className="flex flex-col items-center gap-1 p-2 text-xs sm:flex-row sm:gap-2 sm:text-sm">
+              <List className="w-4 h-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Giornaliera</span>
+              <span className="sm:hidden">Giorn.</span>
             </TabsTrigger>
-            <TabsTrigger value="recipes" className="flex items-center gap-2">
-              <ChefHat className="w-4 h-4" />
-              Ricette
+            <TabsTrigger value="recipes" className="flex flex-col items-center gap-1 p-2 text-xs sm:flex-row sm:gap-2 sm:text-sm">
+              <ChefHat className="w-4 h-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Ricette</span>
+              <span className="sm:hidden">Ricette</span>
             </TabsTrigger>
           </TabsList>
 
