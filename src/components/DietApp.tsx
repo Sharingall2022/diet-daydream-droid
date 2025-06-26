@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Calendar, ShoppingCart, ChefHat, List, ArrowLeft, ArrowRight, X } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -112,6 +111,9 @@ const DietApp = () => {
                   <span className="font-medium text-gray-800">{ing.name}</span>
                   <span className="font-bold text-rose-600 bg-rose-100 px-4 py-2 rounded-full shadow-sm">
                     {ing.quantity}{ing.unit}
+                    {ing.alternativeUnit && (
+                      <span className="text-xs ml-1 opacity-75">({ing.alternativeUnit})</span>
+                    )}
                   </span>
                 </div>
               ))}
@@ -163,6 +165,9 @@ const DietApp = () => {
                         <span className="font-semibold text-gray-800">{ing.name}</span>
                         <span className="font-bold text-rose-600 bg-rose-100 px-4 py-2 rounded-full shadow-sm">
                           {ing.quantity}{ing.unit}
+                          {ing.alternativeUnit && (
+                            <span className="text-xs ml-1 opacity-75">({ing.alternativeUnit})</span>
+                          )}
                         </span>
                       </div>
                     ))}

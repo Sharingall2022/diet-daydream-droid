@@ -2,6 +2,7 @@ export interface Ingredient {
   name: string;
   quantity: string;
   unit?: string;
+  alternativeUnit?: string; // Per mostrare ml quando la quantità è in grammi per i liquidi
 }
 
 export interface Recipe {
@@ -33,8 +34,8 @@ export const recipes: Recipe[] = [
     id: "latte-macchiato",
     name: "LATTE P.S.MACCHIATO",
     ingredients: [
-      { name: "LATTE PARZ.SCREMATO", quantity: "250", unit: "g" },
-      { name: "CAFFE'", quantity: "50", unit: "g" }
+      { name: "LATTE PARZ.SCREMATO", quantity: "250", unit: "g", alternativeUnit: "250ml" },
+      { name: "CAFFE'", quantity: "50", unit: "g", alternativeUnit: "50ml" }
     ]
   },
   {
@@ -45,7 +46,7 @@ export const recipes: Recipe[] = [
       { name: "ASPARAGI DI CAMPO", quantity: "220", unit: "g" },
       { name: "OLIO EXTRAVERGINE DI OLIVA", quantity: "5", unit: "g" },
       { name: "CIPOLLE", quantity: "50", unit: "g" },
-      { name: "BRODO VEGETALE", quantity: "300", unit: "ml" }
+      { name: "BRODO VEGETALE", quantity: "300", unit: "ml", alternativeUnit: "300g" }
     ],
     instructions: "METTERE IN UNA CASSERUOLA UN GOCCIO DI OLIO CON LA CIPOLLA TRITATA FINEMENTE, FAR IMBIONDIRE A PENTOLA COPERTA PER POCHI MINUTI. AGGIUNGERE LA PARTE VERDE DEGLI ASPARAGI TAGLIATI A PEZZETTI E FAR INSAPORIRE PER 5 MINUTI. VERSARE IL RISO E FARLO TOSTARE. UNIRE IL BRODO POCO ALLA VOLTA E PORTARE A COTTURA PER 20 MINUTI CIRCA."
   },
@@ -127,7 +128,7 @@ export const recipes: Recipe[] = [
     name: "INSALATA DI VERZA CON LIMONE",
     ingredients: [
       { name: "CAVOLO VERZA", quantity: "100", unit: "g" },
-      { name: "SUCCO DI LIMONE", quantity: "5", unit: "g" }
+      { name: "SUCCO DI LIMONE", quantity: "5", unit: "g", alternativeUnit: "5ml" }
     ]
   },
   {
@@ -147,7 +148,7 @@ export const recipes: Recipe[] = [
       { name: "FAGIOLI BORLOTTI FRESCHI", quantity: "40", unit: "g" },
       { name: "TREVIGIANA", quantity: "75", unit: "g" },
       { name: "CIPOLLE", quantity: "15", unit: "g" },
-      { name: "BRODO VEGETALE", quantity: "160", unit: "ml" },
+      { name: "BRODO VEGETALE", quantity: "160", unit: "ml", alternativeUnit: "160g" },
       { name: "OLIO EXTRAVERGINE DI OLIVA", quantity: "10", unit: "g" },
       { name: "PARMIGIANO", quantity: "10", unit: "g" }
     ],
@@ -179,7 +180,7 @@ export const recipes: Recipe[] = [
     name: "SALMONE AI FERRI E LIMONE",
     ingredients: [
       { name: "SALMONE", quantity: "200", unit: "g" },
-      { name: "SUCCO DI LIMONE", quantity: "10", unit: "g" }
+      { name: "SUCCO DI LIMONE", quantity: "10", unit: "g", alternativeUnit: "10ml" }
     ]
   },
   {
@@ -195,7 +196,7 @@ export const recipes: Recipe[] = [
     name: "INSALATA DI ASPARAGI",
     ingredients: [
       { name: "ASPARAGI DI CAMPO", quantity: "150", unit: "g" },
-      { name: "SUCCO DI LIMONE", quantity: "10", unit: "g" }
+      { name: "SUCCO DI LIMONE", quantity: "10", unit: "g", alternativeUnit: "10ml" }
     ]
   },
   {
@@ -204,7 +205,7 @@ export const recipes: Recipe[] = [
     ingredients: [
       { name: "PETTO DI POLLO", quantity: "200", unit: "g" },
       { name: "PREZZEMOLO", quantity: "Q.B.", unit: "" },
-      { name: "SUCCO DI LIMONE", quantity: "10", unit: "g" }
+      { name: "SUCCO DI LIMONE", quantity: "10", unit: "g", alternativeUnit: "10ml" }
     ]
   },
   {
@@ -212,7 +213,7 @@ export const recipes: Recipe[] = [
     name: "INSALATA DI RADICCHIO ROSSO",
     ingredients: [
       { name: "RADICCHIO ROSSO", quantity: "100", unit: "g" },
-      { name: "SUCCO DI LIMONE", quantity: "5", unit: "g" }
+      { name: "SUCCO DI LIMONE", quantity: "5", unit: "g", alternativeUnit: "5ml" }
     ]
   },
   {
