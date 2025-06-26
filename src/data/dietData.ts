@@ -595,11 +595,12 @@ export const dietPlan: DayPlan[] = [
   }
 ];
 
-// Funzione per calcolare gli ingredienti comuni a tutti i 10 giorni
+// Funzione per calcolare gli ingredienti comuni a più giorni (frequenza >= 2)
 export const calculateCommonIngredients = (): Map<string, number> => {
-  const ingredientCounts = new Map<string, number>();
+  const ingredientsByDay = new Map<string, Set<number>>(); // ingrediente -> giorni in cui appare
+  const ingredientTotals = new Map<string, number>(); // ingrediente -> quantità totale
   
-  // Per ora uso solo i primi 2 giorni, ma la logica è scalabile
+  // Prima raccogliamo tutti gli ingredienti per ogni giorno
   dietPlan.forEach(day => {
     day.meals.forEach(meal => {
       meal.items.forEach(item => {
@@ -607,9 +608,16 @@ export const calculateCommonIngredients = (): Map<string, number> => {
           const recipe = recipes.find(r => r.id === item.recipeId);
           if (recipe) {
             recipe.ingredients.forEach(ingredient => {
+              // Teniamo traccia in quali giorni appare questo ingrediente
+              if (!ingredientsByDay.has(ingredient.name)) {
+                ingredientsByDay.set(ingredient.name, new Set());
+              }
+              ingredientsByDay.get(ingredient.name)!.add(day.day);
+              
+              // Sommiamo la quantità totale
               const quantity = parseFloat(ingredient.quantity);
-              const current = ingredientCounts.get(ingredient.name) || 0;
-              ingredientCounts.set(ingredient.name, current + quantity);
+              const current = ingredientTotals.get(ingredient.name) || 0;
+              ingredientTotals.set(ingredient.name, current + quantity);
             });
           }
         }
@@ -617,7 +625,17 @@ export const calculateCommonIngredients = (): Map<string, number> => {
     });
   });
   
-  return ingredientCounts;
+  // Filtriamo solo gli ingredienti che appaiono in almeno 2 giorni diversi
+  const commonIngredients = new Map<string, number>();
+  
+  for (const [ingredient, days] of ingredientsByDay.entries()) {
+    if (days.size >= 2) { // Appare in almeno 2 giorni
+      const totalQuantity = ingredientTotals.get(ingredient) || 0;
+      commonIngredients.set(ingredient, totalQuantity);
+    }
+  }
+  
+  return commonIngredients;
 };
 
 // Funzione per calcolare gli ingredienti specifici di un giorno
