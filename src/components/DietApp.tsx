@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, ShoppingCart, ChefHat, List, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Calendar, ShoppingCart, ChefHat, List, ArrowLeft, ArrowRight, X } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -8,6 +8,7 @@ import { dietPlan, recipes, calculateCommonIngredients, calculateDayIngredients 
 const DietApp = () => {
   const [currentDay, setCurrentDay] = useState(1);
   const [activeTab, setActiveTab] = useState('today');
+  const [selectedRecipe, setSelectedRecipe] = useState<any>(null);
 
   const currentDayPlan = dietPlan.find(d => d.day === currentDay);
   const commonIngredients = calculateCommonIngredients();
@@ -21,6 +22,17 @@ const DietApp = () => {
     if (currentDay > 1) setCurrentDay(currentDay - 1);
   };
 
+  const openRecipe = (recipeId: string) => {
+    const recipe = recipes.find(r => r.id === recipeId);
+    if (recipe) {
+      setSelectedRecipe(recipe);
+    }
+  };
+
+  const closeRecipe = () => {
+    setSelectedRecipe(null);
+  };
+
   const MealCard = ({ meal }: { meal: any }) => (
     <Card className="mb-4 bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
       <CardHeader className="pb-3">
@@ -32,8 +44,16 @@ const DietApp = () => {
       <CardContent>
         <div className="space-y-2">
           {meal.items.map((item: any, index: number) => (
-            <div key={index} className="flex justify-between items-center p-2 bg-white rounded-lg border border-green-100">
-              <span className="font-medium text-gray-700">{item.name}</span>
+            <div 
+              key={index} 
+              className={`flex justify-between items-center p-2 bg-white rounded-lg border border-green-100 ${
+                item.recipeId ? 'cursor-pointer hover:bg-green-50 hover:border-green-300 transition-colors' : ''
+              }`}
+              onClick={() => item.recipeId && openRecipe(item.recipeId)}
+            >
+              <span className={`font-medium text-gray-700 ${item.recipeId ? 'text-green-600 hover:text-green-800' : ''}`}>
+                {item.name}
+              </span>
               {item.quantity && (
                 <span className="text-sm bg-green-100 text-green-700 px-2 py-1 rounded-full">
                   {item.quantity}
@@ -102,6 +122,50 @@ const DietApp = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-100 via-blue-50 to-purple-100">
+      {/* Recipe Modal Overlay */}
+      {selectedRecipe && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
+              <h2 className="text-xl font-bold text-gray-800">{selectedRecipe.name}</h2>
+              <Button 
+                onClick={closeRecipe}
+                variant="ghost" 
+                size="sm"
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+            <div className="p-4">
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-semibold text-gray-700 mb-3 text-lg">Ingredienti:</h4>
+                  <div className="space-y-2">
+                    {selectedRecipe.ingredients.map((ing: any, index: number) => (
+                      <div key={index} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg border">
+                        <span className="font-medium">{ing.name}</span>
+                        <span className="font-semibold text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
+                          {ing.quantity}{ing.unit}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {selectedRecipe.instructions && (
+                  <div>
+                    <h4 className="font-semibold text-gray-700 mb-3 text-lg">Preparazione:</h4>
+                    <div className="bg-gray-50 p-4 rounded-lg border leading-relaxed text-gray-700">
+                      {selectedRecipe.instructions}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white p-6 shadow-lg">
         <h1 className="text-2xl font-bold text-center mb-4">La Mia Dieta</h1>
